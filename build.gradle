@@ -1,0 +1,35 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.0.2'
+	id 'io.spring.dependency-management' version '1.1.0'
+}
+ext {
+	springBootVersion = "3.0.2"
+}
+
+repositories {
+	mavenCentral()
+	mavenLocal()
+	maven { url "https://plugins.gradle.org/m2/" }
+}
+group = 'com.example.micrometer.logging'
+version = '0.X.X'
+sourceCompatibility = '17'
+
+compileJava {
+	sourceCompatibility = 17
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.boot:spring-boot-starter-parent:${springBootVersion}"
+	}
+}
+
+dependencies {
+	implementation "org.springframework.boot:spring-boot-starter-web"
+	//implementation "org.springframework.boot:spring-boot-starter-actuator"
+	implementation platform('io.micrometer:micrometer-tracing-bom:latest.release')
+	implementation group: 'io.micrometer', name: 'micrometer-tracing-bridge-brave', version: 'latest.release'
+
+}
